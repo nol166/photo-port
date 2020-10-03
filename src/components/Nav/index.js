@@ -1,27 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { capitalizeFirstLetter } from '../../utils/helpers'
 
-function Nav() {
-    const [currentCategory, setCurrentCategory] = useState(categories[0])
-    const [categories] = useState([
-        {
-            name: 'commercial',
-            description:
-                'Photos of grocery stores, food trucks, and other commercial projects',
-        },
-        { name: 'portraits', description: 'Portraits of people in my life' },
-        { name: 'food', description: 'Delicious delicacies' },
-        {
-            name: 'landscape',
-            description:
-                'Fields, farmhouses, waterfalls, and the beauty of nature',
-        },
-    ])
-
-    const handleClick = item => {
-        console.log(item)
-        return item
-    }
+function Nav(props) {
+    const { categories = [], setCurrentCategory, currentCategory } = props
+    useEffect(() => {
+        document.title = capitalizeFirstLetter(currentCategory.name)
+    }, [currentCategory])
 
     return (
         <header className="flex-row px-1">
@@ -37,9 +21,11 @@ function Nav() {
             <nav>
                 <ul className="flex-row">
                     <li className="mx-2">
-                        <a href="#about">About me</a>
+                        <a data-testid="about" href="#about">
+                            About me
+                        </a>
                     </li>
-                    <li>
+                    <li className="mx-2">
                         <span>Contact</span>
                     </li>
                     {categories.map(category => (
